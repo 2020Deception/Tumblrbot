@@ -1,4 +1,106 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
+    <entity name="Dialogue" representedClassName="Dialogue" syncable="YES">
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phrase" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TMBChatPost" inverseName="chat" inverseEntity="TMBChatPost" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName="Image" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="photo_post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="image" inverseEntity="Photo" syncable="YES"/>
+    </entity>
+    <entity name="Photo" representedClassName="Photo" syncable="YES">
+        <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="photo_post" inverseEntity="Image" syncable="YES"/>
+        <relationship name="link_post" optional="YES" maxCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="TMBLinkPost" inverseName="photos" inverseEntity="TMBLinkPost" syncable="YES"/>
+        <relationship name="photo_post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TMBPhotoPost" inverseName="photos" inverseEntity="TMBPhotoPost" syncable="YES"/>
+    </entity>
+    <entity name="Player" representedClassName="Player" syncable="YES">
+        <attribute name="embed_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="player_post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TMBVideoPost" inverseName="players" inverseEntity="TMBVideoPost" syncable="YES"/>
+    </entity>
+    <entity name="TMBAnswerPost" representedClassName="TMBAnswerPost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="answer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="asking_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="asking_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TMBAudioPost" representedClassName="TMBAudioPost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="album" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="album_art" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="player" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="plays" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="track_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="track_number" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TMBChatPost" representedClassName="TMBChatPost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="chat" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Dialogue" inverseName="chat" inverseEntity="Dialogue" syncable="YES"/>
+    </entity>
+    <entity name="TMBLinkPost" representedClassName="TMBLinkPost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="excerpt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publisher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_description" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Photo" inverseName="link_post" inverseEntity="Photo" syncable="YES"/>
+    </entity>
+    <entity name="TMBPhotoPost" representedClassName="TMBPhotoPost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image_permalink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="link_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note_count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="post_author" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Photo" inverseName="photo_post" inverseEntity="Photo" syncable="YES"/>
+    </entity>
+    <entity name="TMBPost" representedClassName="TMBPost" syncable="YES">
+        <attribute name="blog_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="liked" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="post_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="source_title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="source_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TMBQuotePost" representedClassName="TMBQuotePost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TMBTextPost" representedClassName="TMBTextPost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TMBVideoPost" representedClassName="TMBVideoPost" parentEntity="TMBPost" syncable="YES">
+        <attribute name="caption" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="players" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Player" inverseName="player_post" inverseEntity="Player" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Dialogue" positionX="-585" positionY="216" width="128" height="103"/>
+        <element name="Image" positionX="-378" positionY="-333" width="128" height="75"/>
+        <element name="Photo" positionX="-54" positionY="207" width="128" height="150"/>
+        <element name="Player" positionX="79" positionY="45" width="128" height="58"/>
+        <element name="TMBAnswerPost" positionX="-227" positionY="-135" width="128" height="103"/>
+        <element name="TMBAudioPost" positionX="-533" positionY="-135" width="128" height="178"/>
+        <element name="TMBChatPost" positionX="-378" positionY="-0" width="128" height="90"/>
+        <element name="TMBLinkPost" positionX="-236" positionY="99" width="128" height="148"/>
+        <element name="TMBPhotoPost" positionX="-74" positionY="-135" width="128" height="133"/>
+        <element name="TMBPost" positionX="-234" positionY="-484" width="128" height="208"/>
+        <element name="TMBQuotePost" positionX="-432" positionY="-351" width="128" height="73"/>
+        <element name="TMBTextPost" positionX="-380" positionY="-135" width="128" height="73"/>
+        <element name="TMBVideoPost" positionX="81" positionY="-134" width="128" height="75"/>
+    </elements>
 </model>
